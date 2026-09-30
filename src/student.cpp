@@ -107,16 +107,23 @@ bool kurungSeimbang(const string& ekspresi) {
     s.top = nullptr;
 
     for (char c : ekspresi) {
-        if (c == '(') {
-            push(s, 1);
+        if (c == '(' || c == '[' || c == '{') {
+            push(s, c);
         }
-        else if (c == ')') {
+
+        else if (c == ')' || c == ']' || c == '}') {
             if (isEmpty(s)) {
                 return false;
             }
 
-            int nilai;
-            pop(s, nilai);
+            int topChar;
+            pop(s, topChar);
+
+            if ((c == ')' && topChar != '(') ||
+                (c == ']' && topChar != '[') ||
+                (c == '}' && topChar != '{')) {
+                return false; 
+            }
         }
     }
 
